@@ -1,13 +1,13 @@
-
 from pathlib import Path
+import dj_database_url
 
 # importing and initialising env
 from environ import Env
+
 env = Env()
 env.read_env()
 
 ENVIRONMENT = env('ENVIRONMENT', default='production')
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,15 +23,12 @@ if ENVIRONMENT == 'development':
 else:
     DEBUG = False
 
-
 ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = {
- '127.0.0.1',
- 'localhost:8000'
+    '127.0.0.1',
+    'localhost:8000'
 }
-
-
 
 # Application definition
 
@@ -104,12 +101,18 @@ WSGI_APPLICATION = 'a_core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+POSTGRES_LOCALLY = False
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -146,7 +149,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
