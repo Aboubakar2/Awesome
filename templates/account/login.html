@@ -1,0 +1,21 @@
+{% extends "account/base_entrance.html" %}
+{% load allauth i18n %}
+
+
+{% block head_title %}
+    {% trans "Login" %}
+{% endblock head_title %}
+
+{% block content %}
+    <p>{% blocktrans %}If you have not created an account yet, then please <a class="auth-link" href="{{ signup_url }}" >sign up</a> first.{% endblocktrans %} </p>
+
+<form class="login" id="login_form" method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit">{% trans "Sign In" %} &raquo;</button>
+</form>
+
+
+
+{% endblock %}
+
