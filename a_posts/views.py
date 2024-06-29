@@ -22,7 +22,7 @@ def home_view(request, tag=None):
     paginator = Paginator(posts, 3)
     page = int(request.GET.get('page', 1))
     try:
-        posts = paginator.page(page)
+        posts = paginator.get_page(page)
     except:
         return HttpResponse('')
 

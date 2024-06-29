@@ -21,7 +21,7 @@ def create_profile(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Profile)
-def create_profile(sender, instance, created, **kwargs):
+def update_user(sender, instance, created, **kwargs):
     profile = instance
     if not created:
         user = get_object_or_404(User, id=profile.user.id)
