@@ -1,3 +1,4 @@
+from allauth.account.utils import send_email_confirmation
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,6 @@ from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-
 
 from a_users.forms import ProfileForm
 from a_posts.forms import ReplyCreateForm
@@ -51,7 +51,10 @@ def profile_edit(request):
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            if request.user.emailaddress_set.get(primary=True).verified:
+                return redirect('profile')
+            else:
+                return redirect('profile-verify-email')
 
     if request.path == reverse('profile-onboarding'):
         template = 'a_users/profile_onboarding.html'
@@ -69,3 +72,8 @@ def profile_delete(request):
         messages.success(request, 'Account deleted, what a pity')
         return redirect('home')
     return render(request, 'a_users/profile_delete.html')
+
+
+def profile_verify_email(request):
+    send_email_confirmation(request, request.user)
+    return redirect('profile')
