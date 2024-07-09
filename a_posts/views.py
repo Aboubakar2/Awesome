@@ -30,7 +30,7 @@ def home_view(request, tag=None):
 
     # verify if there is a faeture to return
     try:
-        feature_herobutton = feature_enable(1, 'alhassane')
+        feature_herobutton = feature_enable(1, 'alhassane') or  feature_enable(1, 'Bakary')
     except:
         feature_herobutton = False
 
