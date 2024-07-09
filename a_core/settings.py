@@ -9,6 +9,10 @@ env.read_env()
 
 ENVIRONMENT = env('ENVIRONMENT', default='production')
 
+# Feature Toggle
+DEVELOPER = env('DEVELOPER', default='')
+STAGING = env('STAGING', default='False')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -54,24 +58,8 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'a_posts',
     'a_users',
-
+    'a_features',
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 SITE_ID = 1
 
@@ -129,7 +117,6 @@ DATABASES = {
     }
 }
 
-
 POSTGRES_LOCALLY = False
 
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
@@ -173,7 +160,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 
-
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:
@@ -202,7 +188,6 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
