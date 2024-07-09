@@ -24,10 +24,15 @@ SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == 'development':
     DEBUG = True
+    ALLOWED_HOSTS = ['*']
+    
 else:
     DEBUG = False
+    ALLOWED_HOSTS = [env('RENDER_EXTERNAL_HOSTNAME')]
+
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', env('RENDER_EXTERNAL_HOSTNAME')]
+
 
 CSRF_TRUSTED_ORIGINS = [ 'https://*.onrender.com' ]
 
