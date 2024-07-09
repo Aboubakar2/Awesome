@@ -24,10 +24,12 @@ SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == 'development':
     DEBUG = True
+    ALLOWED_HOSTS = ['*']
+    
 else:
     DEBUG = False
+    ALLOWED_HOSTS = [env('RENDER_EXTERNAL_HOSTNAME')]
 
-ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = {
     '127.0.0.1',
