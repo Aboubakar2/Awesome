@@ -24,17 +24,13 @@ SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == 'development':
     DEBUG = True
-    ALLOWED_HOSTS = ['*']
-    
+    ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
+
 else:
     DEBUG = False
     ALLOWED_HOSTS = [env('RENDER_EXTERNAL_HOSTNAME')]
 
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', env('RENDER_EXTERNAL_HOSTNAME')]
-
-
-CSRF_TRUSTED_ORIGINS = [ 'https://*.onrender.com' ]
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 INTERNAL_IPS = (
     '127.0.0.1',
@@ -127,7 +123,6 @@ POSTGRES_LOCALLY = False
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -175,7 +170,6 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     }
 else:
     MEDIA_ROOT = BASE_DIR / 'media'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
