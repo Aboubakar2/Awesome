@@ -7,6 +7,8 @@ from django.core.paginator import Paginator
 
 from .models import Post, Tag, Comment, Reply
 from .forms import PostCreateForm, PostEditForm, CommentCreateForm, ReplyCreateForm
+from a_features.views import feature_enable
+
 
 from bs4 import BeautifulSoup
 import requests
@@ -26,11 +28,17 @@ def home_view(request, tag=None):
     except:
         return HttpResponse('')
 
+    # verify if there is a faeture to return
+    try:
+        feature_herobutton = feature_enable(1, 'alhassane')
+    except:
+        feature_herobutton = False
+
     context = {
         'posts': posts,
         'tag': tag,
         'page': page,
-
+        'feature_herobutton': feature_herobutton,
     }
     if request.htmx:
         return render(request, 'snippets/loop_home_posts.html', context)
