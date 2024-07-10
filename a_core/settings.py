@@ -54,23 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'a_posts',
     'a_users',
-
+    'a_features',
+    'a_landingpages',
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 SITE_ID = 1
@@ -88,6 +74,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     #     Django Allauth middleware
     "allauth.account.middleware.AccountMiddleware",
+    "a_landingpages.middleware.landingpage_middleware",
 
 ]
 
@@ -132,7 +119,7 @@ DATABASES = {
 
 POSTGRES_LOCALLY = False
 
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Password validation
