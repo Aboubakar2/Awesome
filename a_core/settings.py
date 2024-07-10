@@ -9,6 +9,10 @@ env.read_env()
 
 ENVIRONMENT = env('ENVIRONMENT', default='production')
 
+# Feature Toggle
+DEVELOPER = env('DEVELOPER', default='')
+STAGING = env('STAGING', default='False')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,16 +24,18 @@ SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == 'development':
     DEBUG = True
+    ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
+
 else:
     DEBUG = False
+    ALLOWED_HOSTS = [env('RENDER_EXTERNAL_HOSTNAME')]
 
-ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
-INTERNAL_IPS = {
+INTERNAL_IPS = (
     '127.0.0.1',
     'localhost:8000'
-}
-
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,7 +63,6 @@ INSTALLED_APPS = [
     'a_features',
     'a_landingpages',
 ]
-
 
 SITE_ID = 1
 
@@ -116,9 +121,7 @@ DATABASES = {
     }
 }
 
-
 POSTGRES_LOCALLY = False
-
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
@@ -160,17 +163,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 
-
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': env('CLOUD_NAME'),
+        'API_KEY': env('CLOUD_API_KEY'),
+        'API_SECRET': env('CLOUD_API_SECRET')
+    }
 else:
     MEDIA_ROOT = BASE_DIR / 'media'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUD_NAME'),
-    'API_KEY': env('CLOUD_API_KEY'),
-    'API_SECRET': env('CLOUD_API_SECRET')
-}
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -189,7 +191,6 @@ if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
