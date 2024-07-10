@@ -1,4 +1,8 @@
 {% extends 'layout/a.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block og-caption %}{{ post.body }}{% endblock %}
+{% block og-description %} shared by {{ post.author }} - @{{ post.artist }}{% endblock %}
 
 {% block content %}
     {% include 'a_posts/post.html' %}

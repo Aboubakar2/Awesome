@@ -1,8 +1,19 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
 from a_posts import views
 
+# Conf for sitemaps
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import *
+sitemaps = {
+    'static': StaticSitemap,
+    'categories': CategorySitemap,
+    'postpages': PostpageSitemap
+}
 urlpatterns = [
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
     path('', views.home_view, name='home'),
     path('post/create/', views.post_create, name='post-create'),
     path('category/<tag>/', views.home_view, name='category'),
