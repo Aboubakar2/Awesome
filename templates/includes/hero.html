@@ -4,7 +4,7 @@
         <h1 class="font1 text-6xl title-fadein">Awesome Photos & Captions</h1>
         <p class="text-lg font-bold mb-5">Share your favorite Photos from Flickr and add a great caption</p>
         {% if not user.is_authenticated %}
-        <a style="padding:20px; background-color:#5828F4; border-radius:10px;"
+        <a style="padding:18px; background-color:#5828F4; border-radius:10px;"
         class="button" href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Create Account</a>
         {% endif %}
     </div>
