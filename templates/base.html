@@ -12,7 +12,7 @@
 
     <meta content="http://{{ request.META.HTTP_HOST}}{{ request.path }}">
     <meta property="og:title" content=" {% block og-caption %} Awesome {% endblock %}">
-    <meta content="{% blog og-description %}Image—sharing platform with rankings {% endblock %}">
+    <meta content="{% block og-description %}Image—sharing platform with rankings {% endblock %}">
 
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
@@ -22,9 +22,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link rel="stylesheet" href="{% if debug %} {% static '/css/style.css' %} {% else %} {% static '/css/style.min.css' %} {% endif %}">
-
-
-
 
 </head>
 <body class="bg-gray-100">
