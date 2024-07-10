@@ -24,18 +24,18 @@ SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == 'development':
     DEBUG = True
-    ALLOWED_HOSTS = ['*']
-    
+    ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
+
 else:
     DEBUG = False
     ALLOWED_HOSTS = [env('RENDER_EXTERNAL_HOSTNAME')]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
-INTERNAL_IPS = {
+INTERNAL_IPS = (
     '127.0.0.1',
     'localhost:8000'
-}
-
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'a_posts',
     'a_users',
     'a_features',
+    'a_landingpages',
 ]
 
 SITE_ID = 1
@@ -78,6 +79,7 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     #     Django Allauth middleware
     "allauth.account.middleware.AccountMiddleware",
+    "a_landingpages.middleware.landingpage_middleware",
 
 ]
 
@@ -119,9 +121,8 @@ DATABASES = {
     }
 }
 
-POSTGRES_LOCALLY = True
-
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Password validation
@@ -164,14 +165,14 @@ MEDIA_URL = 'media/'
 
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': env('CLOUD_NAME'),
+        'API_KEY': env('CLOUD_API_KEY'),
+        'API_SECRET': env('CLOUD_API_SECRET')
+    }
 else:
     MEDIA_ROOT = BASE_DIR / 'media'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUD_NAME'),
-    'API_KEY': env('CLOUD_API_KEY'),
-    'API_SECRET': env('CLOUD_API_SECRET')
-}
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
