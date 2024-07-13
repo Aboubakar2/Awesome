@@ -99,17 +99,11 @@ html, body {
 p {
     margin-bottom: 1rem;
 }
-form p {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
+
 label, input {
   display: inline-block;
 }
-form p label {
-    width: 7rem;
-    }
+
 label {
     margin: 6px 0 3px;
 }
@@ -227,4 +221,32 @@ input[name="remember"] {
 }
 #profile article p {
     @apply truncate leading-normal;
+}
+
+
+.allauth .helptext {
+    @apply block mt-4
+}
+
+
+.allauth  .card a{
+    @apply underline underline-offset-2
+}
+
+
+.allauth .card form[action="/accounts/signup/"] ul {
+    @apply hidden
+}
+
+.allauth .card form[action="/accounts/signup/"] ul.errorlist {
+    @apply block
+}
+
+.allauth label[for="id_password2"]  {
+    @apply  hidden
+}
+
+
+.allauth input#id_password2  {
+    @apply  mb-4
 }
