@@ -1037,22 +1037,6 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8,0,1,1);
-  }
-
-  50% {
-    transform: none;
-    animation-timing-function: cubic-bezier(0,0,0.2,1);
-  }
-}
-
-.animate-bounce {
-  animation: bounce 1s infinite;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -1594,18 +1578,8 @@ p {
   margin-bottom: 1rem;
 }
 
-form p {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 label, input {
   display: inline-block;
-}
-
-form p label {
-  width: 7rem;
 }
 
 label {
@@ -1765,6 +1739,32 @@ input[name="remember"] {
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1.5;
+}
+
+.allauth .helptext {
+  margin-top: 1rem;
+  display: block;
+}
+
+.allauth  .card a {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+}
+
+.allauth .card form[action="/accounts/signup/"] ul {
+  display: none;
+}
+
+.allauth .card form[action="/accounts/signup/"] ul.errorlist {
+  display: block;
+}
+
+.allauth label[for="id_password2"] {
+  display: none;
+}
+
+.allauth input#id_password2 {
+  margin-bottom: 1rem;
 }
 
 .hover\:scale-95:hover {
