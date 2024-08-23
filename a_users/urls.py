@@ -10,5 +10,4 @@ urlpatterns = [
     path('profile/delete/', views.profile_delete, name='profile-delete'),
     path('profile/verify-email/', views.profile_verify_email, name='profile-verify-email'),
 
-
 ]
