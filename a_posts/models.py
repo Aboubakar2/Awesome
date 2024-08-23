@@ -26,7 +26,6 @@ class Post(models.Model):
         return f'/post/{self.id}/'
 
 
-
 class LikedPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -104,4 +103,3 @@ class LikedReply(models.Model):
 
     def __str__(self):
         return f'{self.user.username} : {self.reply.body[:30]}'
-

@@ -28,7 +28,7 @@ def home_view(request, tag=None):
     except:
         return HttpResponse('')
 
-    # verify if there is a faeture to return
+    # verify if there is a feature to return
     try:
         feature_herobutton = feature_enable(1, 'alhassane') or  feature_enable(1, 'Bakary')
     except:
