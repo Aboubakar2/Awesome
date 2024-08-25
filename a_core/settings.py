@@ -31,6 +31,12 @@ ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '.vercel.app', '.now.sh']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com','https://*.vercel.app']
 
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
 INTERNAL_IPS = (
     '127.0.0.1',
     'localhost:8000'
@@ -102,7 +108,6 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
@@ -130,7 +135,12 @@ DATABASES = {
 
 POSTGRES_LOCALLY = False
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-    DATABASES['default'] = dj_database_url.parse(env('POSTGRES_HOST'))
+
+    DATABASES['default'] = dj_database_url.config(
+            default=env("DATABASE_URL"),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

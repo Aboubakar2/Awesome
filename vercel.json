@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "a_core/wsgi.py",
@@ -6,8 +7,11 @@
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
     },
     {
-      "src": "static/**",
-      "use": "@vercel/static"
+      "src": "build.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
     }
   ],
   "routes": [
@@ -19,5 +23,10 @@
       "src": "/(.*)",
       "dest": "a_core/wsgi.py"
     }
-  ]
+  ],
+  "env": {
+    "PYTHONUNBUFFERED": "1"
+  },
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+  "postBuildCommand": "python manage.py migrate"
 }
